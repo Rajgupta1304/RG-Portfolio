@@ -1,17 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Loader & Start Sequence Animation
-  // const loader = document.getElementById('loader');
-
-  // // Simulate loading time for effect (2 seconds minimum)
-  // setTimeout(() => {
-  //     loader.classList.add('fade-out');
-
-  //     // Trigger the initial animations of elements in view after loader disappears
-  //     setTimeout(() => {
-  //         initScrollAnimations();
-  //     }, 500); // Wait for loader slide up
-
-  // }, 2500);;
 
   const glow = document.getElementById("glow");
 
@@ -34,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Scroll Animation
-  const observer = new IntersectionObserver((entries) => {
+  const scrollobserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("show");
@@ -42,12 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document.querySelectorAll(".hidden").forEach((el) => observer.observe(el));
+  document.querySelectorAll(".hidden").forEach((el) => scrollobserver.observe(el));
 
   document
     .querySelector(".contact-form")
     .addEventListener("submit", function (e) {
-      alert("Message sent successfully 🚀");
         setTimeout(() => {
       this.reset();
     }, 3000);
@@ -130,7 +116,7 @@ window.addEventListener("resize", () => {
 //projects code 
 const cards = document.querySelectorAll(".project-card");
 
-const observer = new IntersectionObserver(entries => {
+const cardobserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("show");
@@ -139,13 +125,13 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 
 cards.forEach(card => {
-  observer.observe(card);
+ cardobserver.observe(card);
 });
 
 // about section code
 const aboutCard = document.querySelector(".about-card");
 
-const observe = new IntersectionObserver(entries => {
+const aboutobserve = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       aboutCard.classList.add("show");
@@ -153,4 +139,21 @@ const observe = new IntersectionObserver(entries => {
   });
 });
 
-observe.observe(aboutCard);
+aboutobserve.observe(aboutCard);
+
+emailjs.init("fFfCmrsL8KtOCyfFk");
+
+document.querySelector(".contact-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  emailjs.send("service_txkdeol", "template_i0cqjrk", {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value,
+  }).then(() => {
+    alert("Message sent successfully!");
+  }).catch((err) => {
+    alert("Failed to send message");
+    console.log(err);
+  });
+});
