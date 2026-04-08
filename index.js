@@ -5,7 +5,6 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -62,7 +61,8 @@ Message: ${message}
     res.send("Error sending email ❌");
   }
 });
+const PORT = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Portfolio server running at http://localhost:${port}/`);
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
